@@ -1,0 +1,21 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+int factorial(int N) {
+	int fac=1;
+	for (int i=1; i<=N; ++i) {
+		fac*=i;
+	}
+	return fac;
+}
+
+int main() {
+	int n;
+	printf("Input n: ");
+	scanf("%d",&n);
+	int c[n];
+	for(int i=1; i<=n; ++i){
+		c[i]=factorial(n)/(factorial(i)*factorial(n-i));
+		printf("%d ",c[i]);
+	}
+}
