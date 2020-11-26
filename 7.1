@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+double fun(double x) {
+	double a=2.14, b=-4.21, c=3.25;
+	double res=a*x*x*sin(x)+b*x+c;
+	return res;
+}
+
+int main() {
+	double x_start=-4.5, x_end=-33.5, h=0.5;
+	int N=(x_start-x_end)/0.5+1;
+	double a[N];
+	for(int i=0; i<N; i++) {
+		if(x_start>=x_end) {
+			a[i]=fun(x_start);
+			x_start-=h;
+		}
+	}
+	for(int i=0; i<N-1; i++) {
+		for(int j=N-2; j>=i; j--){
+			if(a[j]<a[j+1]) {
+				int tmp=a[j];
+				a[j]=a[j+1];
+				a[j+1]=tmp;
+			}
+		}
+	}
+	for(int i=0; i<N; i++) {
+		printf("%lf\n",a[i]);
+	}
+}
