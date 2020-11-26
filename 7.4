@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int random (int N) {
+	return rand()%N;
+}
+
+int main() {
+	int a=0, b=20;
+	int c[20];
+	int d[20];
+	int e[40];
+	
+	//заполнение массива с рандомными числами//
+	printf("ARRAY C:\n");
+	for (int i=0; i<20; ++i) {
+		c[i]=random(b-a+1)+a;
+		printf("%d ",c[i]);
+	}
+	printf("\n");
+	
+	//заполнение массива d рандомными числами//
+	printf("ARRAY D:\n");
+	for(int i=0; i<20; i++) {
+		d[i]=random(b-a+1)+a;
+		printf("%d ",d[i]);
+	}
+	
+	//сортировка массива с методом пузырька//
+	for(int i=0; i<19; i++) {
+		for(int j=18; j>=i; j--) {
+			if(c[j]>c[j+1] ) {
+				int tmp=c[j];
+				c[j]=c[j+1];
+				c[j+1]=tmp;
+			}
+		}
+	}
+	//сортировка массива d методом пузырька//
+	for(int i=0; i<19; i++) {
+		for(int j=18; j>=i; j--) {
+			if(d[j]>d[j+1] ) {
+				int tmp=d[j];
+				d[j]=d[j+1];
+				d[j+1]=tmp;
+			}
+		}
+	}
+	
+	//слияние массивов с и d в массив e//
+	int k=0, q=0;
+	for(int i=0; i<40; i++) {
+		if(k>20) {
+			e[i]=d[q];
+			q++;
+		}
+		else if(q>20) {
+			e[i]=c[k];
+			k++;
+		}
+		else if(c[k]<d[q]) {
+			e[i]=c[k];
+			k++;
+		}
+		else {
+			e[i]=d[q];
+			q++;
+		}
+	}
+	
+	//вывод массива е//
+	printf("\nARRAY E:\n");
+	for(int i=0; i<40; i++) {
+		printf("%d ",e[i]);
+	}
+}
