@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int random (int N) {
+	return rand()%N;
+}
+
+int main() {
+	int A[15];
+	int i,j;
+	int a=0, b=10;
+	bool f;
+	for(i=0; i<15; i++) {
+		A[i]=random(b-a+1)+a;
+		printf("%d ",A[i]);
+	}
+	printf("\n");
+	for(i=0; i<15; i++) {
+		f=true;
+		for(j=0; j<15; j++) {
+			if(A[i]==A[j] && i!=j) {
+				f=false;
+				break;
+			}
+		}
+		if(f==true) printf("%d ",A[i]);
+	}
+}
