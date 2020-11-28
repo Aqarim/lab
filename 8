@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+const int n=5000;
+
+double fun(double x) {
+	double y=1/((0.5+0.1*x*x*x)*sqrt(x));
+	return y;
+}
+
+int main() {
+	int N;
+	printf("Input N: ");
+	scanf("%d",&N);
+	
+	double a=0.1, b=2.1;
+	double array[n];
+	double h=(b-a)/N;
+	double I1=0,I2=0;
+	
+	//заполнение массива//
+	int i=0;
+	do {
+		array[i]=fun(a);
+		a+=h;
+		i++;
+	}
+	while(a<=b);
+
+	//формула трапеции//
+	for(int i=1; i<N; i++) {
+		I1+=array[i]*h;
+	}
+	I1+=h*(array[0]/2+array[N]/2);
+
+	//формула Симпсона//
+	for(int i=1; i<N; i++) { 
+		if(i%2!=0) I2+=(h/3)*(4*array[i]);
+			else I2+=(h/3)*(2*array[i]);
+	}
+	I2+=(h/3)*(array[0]+array[N]);
+	
+	//Вывод ответов//
+	printf("Trapeze: %lf\n",I1);
+	printf("Simpson: %lf",I2);
+}
