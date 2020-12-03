@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+const int N=5;
+
+int random (int N) {
+	return rand()%N;
+}
+
+int main() {
+	int m[N][N], m_trans[N][N];
+	int a=5, b=0;
+	
+	//заполнение матрицы рандомными числами//
+	for(int i=0; i<N; i++) {
+		for(int j=0; j<N; j++) {
+			m[i][j]=random(a-b+1)+b;
+		}
+	}	
+	
+	//вывод матрицы на экран//
+	printf("Matrix before:\n");
+	for(int i=0; i<N; i++) { 
+ 		for (int j=0; j<N; j++) {
+       		printf("%4d",m[i][j]);
+       }
+	printf("\n");
+	}
+	
+	//транспонирование//
+	for(int i=0; i<N; i++) {
+		for(int j=0; j<N; j++) {
+			m_trans[i][j]=m[j][i];
+		}
+	}
+	
+	printf("\n");
+	
+	//вывод матрицы после изменений//
+	printf("Matrix after:\n");
+	for(int i=0; i<N; i++) { 
+ 		for (int j=0; j<N; j++) {
+       		printf("%4d",m_trans[i][j]);
+       }
+	printf("\n");
+	}
+}
