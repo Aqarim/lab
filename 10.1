@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <iostream>
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	char str1[150];
+	char str[50][50];
+	char pr[10];
+	printf("Введите строку, слова разделите ','\n");
+	gets(str1);
+	
+	//разделение введенной строки на слова//
+	char* pch=strtok(str1,",");
+	int n=0;
+	while(pch!=NULL) {
+		strcpy(str[n],pch);
+		n++;
+		pch=strtok(NULL,",");
+	}
+	
+	printf("Введите приставку\n");
+	gets(pr);
+	
+	//Нахождение слов и вывод//
+	int len=strlen(pr);
+	for(int i=0; i<n; ++i) {
+		if(strncmp(str[i],pr,len) == 0)
+			puts(str[i]);
+	}
+}
