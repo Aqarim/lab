@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <iostream>
+
+int main() {
+	setlocale(LC_ALL, "Russian");
+	char str1[150];
+	char str[50][50];
+	
+	printf("Введите строку, слова разделите знаком ','\n");
+	gets(str1);
+	
+	//разделение введеной строки на слова//
+	char* pch=strtok(str1,",");
+	int n=0;
+	while(pch!=NULL) {
+		strcpy(str[n],pch);
+		n++;
+		pch=strtok(NULL,",");
+	}
+	
+	//упорядочивание списка//
+	for(int i=0; i<n; ++i) {
+		for(int j=0; j<n; ++j) {
+			if(strcmp(str[i],str[j])<0) {
+				char tmp[50];
+				strcpy(tmp, str[i]);
+				strcpy(str[i],str[j]);
+				strcpy(str[j],tmp);
+			}
+		}
+	}
+	
+	
+	//вывод//
+	printf("Результат:\n");
+	for(int i=0; i<n; ++i){
+		puts(str[i]);
+	}
+}
