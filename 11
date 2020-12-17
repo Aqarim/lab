@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <graphics.h>
+
+int main() {
+	int width=300, hight=300, ed=10; // ed - ед.отрезок
+	double x,ord1,ord2;
+	initwindow(width,hight); //создаем окно
+	
+	//рисуем координатные оси//
+	setcolor(2);
+	moveto(width/2,0);
+	lineto(width/2,hight);
+	moveto(0,hight/2);
+	lineto(width,hight/2);
+	
+	//рисуем f1(x)=1+x//
+	setcolor(2);
+	moveto(0,hight);
+	for(double x=0; x<=width; x+=0.1) {
+		lineto(x*ed,hight-(1+x)*ed); //домнажаем на ед.отрезок (ed), чтобы было более нагляднее
+	}
+	
+	//----рисуем f2(x)=x*x----//
+	//правая ветвь параболы//
+	x=0;
+	moveto(width/2,hight/2);
+	do {
+		double y=x*x;
+		lineto(width/2+x*ed,hight/2-y*ed); //домнажаем на ед.отрезок (ed), чтобы было более нагляднее
+		if((y-(1+x))<0.1) ord2=x; //нахождение точки пересечения
+		x+=0.1;
+	} while(x<=width/2);
+	
+	//левая ветвь параболы//
+	x=0;
+	moveto(width/2,hight/2);
+	do {
+		double y=x*x;
+		lineto(width/2-x*ed,hight/2-y*ed); //домнажаем на ед.отрезок (ed), чтобы было более нагляднее
+		x+=0.1;
+	} while(x<=width/2);
+	
+	//подписи//
+	outtextxy(50,250,"f1(x)=1+x");
+	outtextxy(20,40,"f2(x)=x*x");
+	
+	//заливка//
+	setfillstyle(1,15);
+	floodfill(width/2+5,hight/2-5,2); //после Oy
+	floodfill(width/2-5,hight/2-5,2); //до Oy
+	//закраска части оси Oy//
+	setcolor(15);
+	moveto(width/2,hight/2);
+	lineto(width/2,hight/2-ed);
+	
+	//ординаты точек пересения//
+	ord1=-(ord2-1);
+	printf("Ord`s: %lf %lf",ord1,ord2);
+	
+	getch();
+}
