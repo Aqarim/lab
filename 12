@@ -1,0 +1,41 @@
+#include <graphics.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+const int N=100;
+
+void get_snow(int x, int y, int size, int color) {
+	setcolor(color);
+	moveto(x-size,y);
+	lineto(x+size,y);
+	moveto(x,y+size);
+	lineto(x,y-size);
+	moveto(x-size,y-size);
+	lineto(x+size,y+size);
+	moveto(x+size,y-size);
+	lineto(x-size,y+size);
+}
+
+int main() {
+	int x[N], y[N], size[N], color;
+	int width=600, hight=600;
+	
+	initwindow(width,hight); //создаем окно
+	
+	while(1) {
+		for(int i=0; i<N; ++i) {
+			x[i]=rand()%width-20; //генерация случайно координаты по x
+			y[i]=rand()%hight-20; //генерация случайно координаты по y
+			size[i]=rand()%20; //генерация случайно размера снежинки
+			color=1+rand()%14; //генерация цвета снежинки
+			get_snow(x[i],y[i],size[i],color); //передача всех параметров в функцию, которая нарисует все снежинки
+		}
+		
+		for(int i=0; i<N; ++i) {
+			get_snow(x[i],y[i],size[i],0); //"обесцвечивание" всех снежинок
+			delay(15); //задержка в 15мс до следующего появления
+		}
+	}
+	
+	getch();
+}
