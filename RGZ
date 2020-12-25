@@ -1,0 +1,113 @@
+#include <graphics.h>
+#include <time.h>
+
+void draw(int x, int y, int color) {
+	setcolor(color); //выбор цвета
+	circle(x,y,5); //рисование окна
+	//--корпус--//
+	moveto(x+35,y); 
+	lineto(x+20,y-15);
+	lineto(x-35,y-15);
+	lineto(x-35,y+15);
+	lineto(x+20,y+15);
+	lineto(x+20+15,y);
+	//--крылья--//
+	moveto(x-35,y-15);
+	lineto(x-45,y-45);
+	lineto(x-20,y-15);
+	moveto(x-35,y+15);
+	lineto(x-45,y+45);
+	lineto(x-20,y+15);
+}
+
+void free_movement(int width, int hight) {
+	setfillstyle(1,0);
+	bar (0,0,width,hight);
+	
+	int x=(width/2), y=(hight/2); //начальное положение
+	
+	int dx=rand()%11-5, dy=rand()%11-5; //скорость движения
+	int t=rand()%100; //такт
+	int count=0; //счетчик для такта
+	
+	while(1) {
+		while(x+35<width && x-45>0 && y-45>=0 && y+45<hight) {
+			draw(x,y,15); //отображаем объект
+			if(kbhit()) //проверка нажатия клавиши
+				if(getch()==27) //если нажато "Esc" - выход
+					closegraph();
+			delay(20); //задержка 20мс
+			draw(x,y,0); //стираем объект
+			x+=dx; //меняем координату по x
+			y+=dy; //меняем координату по y
+			count++; //прибавляем 1 к счетчику такта
+			if(t==count) {
+				t=rand()%100; //меняем такт
+				count=0; //обнуляем счетчик
+				dx=rand()%11-5; //меняем скорость по x
+				dy=rand()%11-5; //меняем скорость по y
+			}	
+		}
+		dx=-dx;
+		dy=-dy;
+		x+=dx;
+		y+=dy;
+	}
+}
+
+void movement_with_the_keyboard(int width, int hight) {
+	setfillstyle(1,0);
+	bar (0,0,width,hight);
+	
+	int x=(width/2), y=(hight/2); //начальное положение
+	
+	while(1) {
+		draw(x,y,15); //рисуем объект, согласно старотовуму положению
+		int code=getch(); //нажатие клавиши
+		if (code==27) //если нажато "Esc" - выход
+			break;
+		draw(x,y,0); //стираем объект
+		switch(code) {
+		case 75: x--; //если нажато "стрелка влево" двигаемся вправо
+			break; 
+		case 77: x++; //если нажато "стрелка вправо" двигаемся вправо
+			break;
+    	case 72: y--; //если нажато "стрелка вверх" двигаемся вправо
+			break;
+    	case 80: y++; //если нажато "стрелка вниз" двигаемся вправо
+    	}
+	}
+}
+
+void menu(int width, int hight) {
+	setfillstyle(1,0);
+	bar (0,0,width,hight);
+	
+	//контур меню//
+	setcolor(15);
+	rectangle(width/10,hight/10,width-width/10,hight/10+hight/10*6);
+	moveto(width/10,hight/10+hight/10*2);
+	lineto(width-width/10,hight/10+hight/10*2);
+	moveto(width/10,hight/10+hight/10*4);
+	lineto(width-width/10,hight/10+hight/10*4);
+	
+	//пункты меню//
+	outtextxy(width/8,hight/5,"1. Свободное движение объекта");
+	outtextxy(width/8,hight/5*2,"2. Движение объекта с помощью клавиатуры");
+	outtextxy(width/8,hight/5*3,"3. Выход из программы");
+	
+	//проверка выбора пользователя//
+	int ch=getch();
+	if(ch==49) free_movement(width,hight); //если нажата "1" - свободное движение
+	if(ch==50) movement_with_the_keyboard(width,hight); //если нажата "2" - движение с помощью клавиатуры
+	if(ch==51) closegraph(); //если нажата "3" - выход из программы
+}
+
+int main() {
+	srand(time(NULL));
+	
+	int width=500, hight=500;
+	
+	initwindow(width,hight); //создаем окно
+	menu(width,hight); //вызываем фунцию, рисующую меню	
+}
