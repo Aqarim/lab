@@ -1,0 +1,34 @@
+void free_movement(int width, int hight) {
+	setfillstyle(1,0);
+	bar (0,0,width,hight);
+	
+	int x=(width/2), y=(hight/2); //начальное положение
+	
+	int dx=rand()%11-5, dy=rand()%11-5; //скорость движения
+	int t=rand()%10; //такт
+	int count=0; //счетчик для такта
+	
+	while(1) {
+		while(x+35<width && x-45>0 && y-45>=0 && y+45<hight) {
+			while(t!=count) {
+			draw(x,y,15); //отображаем объект
+			if(kbhit()) //проверка нажатия клавиши
+				if(getch()==27) //если нажато "Esc" - выход
+					break;
+			delay(20); //задержка 20мс
+			draw(x,y,0); //стираем объект
+			x+=dx; //меняем координату по x
+			x+=dy; //меняем координату по y
+			count++; //прибавляем 1 к счетчику такта
+			}
+			t=rand()%10; //меняем такт
+			count=0; //обнуляем счетчик
+			dx=rand()%11-5; //меняем скорость по x
+			dy=rand()%11-5; //меняем скорость по y
+		}
+		dx=-dx;
+		dy=-dy;
+		x+=dx;
+		y+=dy;
+	}
+}
